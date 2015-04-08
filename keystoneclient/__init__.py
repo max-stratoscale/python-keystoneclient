@@ -22,8 +22,6 @@ See :py:class:`keystoneclient.v2_0.client.Client` for the Identity V2.0 client.
 """
 
 
-import pbr.version
-
 from keystoneclient import access
 from keystoneclient import client
 from keystoneclient import exceptions
@@ -34,7 +32,7 @@ from keystoneclient import v2_0
 from keystoneclient import v3
 
 
-__version__ = pbr.version.VersionInfo('python-keystoneclient').version_string()
+__version__ = "0.11.1"
 
 __all__ = [
     # Modules
