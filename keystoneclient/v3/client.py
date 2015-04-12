@@ -192,6 +192,9 @@ EndpointPolicyManager`
 
         # DEPRECATED: if session is passed then we go to the new behaviour of
         # authenticating on the first required call.
+
+        self._refresh_token = kwargs.get('refresh_token', False)
+
         if 'session' not in kwargs and self.management_url is None:
             self.authenticate()
 
@@ -245,7 +248,7 @@ EndpointPolicyManager`
             auth_methods = []
 
             if token:
-                auth_methods.append(v3_auth.TokenMethod(token=token))
+                auth_methods.append(v3_auth.TokenMethod(token=token, refresh_token=self._refresh_token))
 
             if password:
                 m = v3_auth.PasswordMethod(user_id=user_id,
