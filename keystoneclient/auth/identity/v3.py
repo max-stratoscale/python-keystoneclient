@@ -191,7 +191,6 @@ class AuthMethod(object):
 class AuthConstructor(Auth):
     """AuthConstructor is a means of creating an Auth Plugin that contains
     only one authentication method. This is generally the required usage.
-
     An AuthConstructor creates an AuthMethod based on the method's
     arguments and the auth_method_class defined by the plugin. It then
     creates the auth plugin with only that authentication method.
@@ -261,7 +260,7 @@ class Password(AuthConstructor):
 
 class TokenMethod(AuthMethod):
 
-    _method_parameters = ['token']
+    _method_parameters = ['token', 'refresh_token']
 
     def __init__(self, **kwargs):
         """Construct an Auth plugin to fetch a token from a token.
@@ -272,7 +271,10 @@ class TokenMethod(AuthMethod):
 
     def get_auth_data(self, session, auth, headers, **kwargs):
         headers['X-Auth-Token'] = self.token
-        return 'token', {'id': self.token}
+        payload = {'id': self.token}
+        if self.refresh_token:
+            payload['refresh'] = True
+        return 'token', payload
 
 
 class Token(AuthConstructor):
